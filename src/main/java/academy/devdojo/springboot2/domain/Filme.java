@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Anime {
+public class Filme {
     private Long id;
     private String name;
 

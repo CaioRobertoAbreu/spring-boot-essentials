@@ -1,7 +1,7 @@
 package academy.devdojo.springboot2.controller;
 
-import academy.devdojo.springboot2.domain.Anime;
-import academy.devdojo.springboot2.service.AnimeService;
+import academy.devdojo.springboot2.domain.Filme;
+import academy.devdojo.springboot2.service.FilmeService;
 import academy.devdojo.springboot2.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -13,38 +13,38 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("animes")
+@RequestMapping("filmes")
 @Log4j2
 @RequiredArgsConstructor
-public class AnimeController {
+public class FilmeController {
     private final DateUtil dateUtil;
-    private final AnimeService animeService;
+    private final FilmeService filmeService;
 
     @GetMapping
-    public ResponseEntity<List<Anime>> list() {
+    public ResponseEntity<List<Filme>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.listAll());
+        return ResponseEntity.ok(filmeService.listAll());
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Anime> findById(@PathVariable long id) {
-        return ResponseEntity.ok(animeService.findById(id));
+    public ResponseEntity<Filme> findById(@PathVariable long id) {
+        return ResponseEntity.ok(filmeService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    public ResponseEntity<Filme> save(@RequestBody Filme filme) {
+        return new ResponseEntity<>(filmeService.save(filme), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
-        animeService.delete(id);
+        filmeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Anime anime) {
-        animeService.replace(anime);
+    public ResponseEntity<Void> replace(@RequestBody Filme filme) {
+        filmeService.replace(filme);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
