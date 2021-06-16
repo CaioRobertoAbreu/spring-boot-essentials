@@ -17,6 +17,7 @@ import java.util.List;
 @Log4j2
 @RequiredArgsConstructor
 public class FilmeController {
+
     private final DateUtil dateUtil;
     private final FilmeService filmeService;
 
@@ -42,9 +43,9 @@ public class FilmeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Filme filme) {
-        filmeService.replace(filme);
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<Void> replace(@PathVariable Long id, @RequestBody Filme filme) {
+        filmeService.replace(id, filme);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
