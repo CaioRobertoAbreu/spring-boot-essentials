@@ -21,13 +21,17 @@ public class FilmeService {
        return repository.findAll();
     }
 
+    public List<Filme> findByName(String nome){
+        return repository.findByNomeContaining(nome);
+    }
+
     public Filme findByIdOrThrowException(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Filme not Found"));
     }
 
     public Filme save(CadastraFilmeRequest filmeRequest) {
-        Filme filme = Filme.builder()
+        var filme = Filme.builder()
                 .nome(filmeRequest.getNome())
                 .build();
 
@@ -41,7 +45,7 @@ public class FilmeService {
 
     public void replace(AtualizaFilmeRequest filmeRequest) {
         findByIdOrThrowException(filmeRequest.getId());
-        Filme filme = Filme.builder()
+        var filme = Filme.builder()
                 .id(filmeRequest.getId())
                 .nome(filmeRequest.getNome())
                 .build();

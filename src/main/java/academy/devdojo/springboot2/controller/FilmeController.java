@@ -29,6 +29,13 @@ public class FilmeController {
         return ResponseEntity.ok(filmeService.listAll());
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<List<Filme>> findByName(@RequestParam(required = true) String nome){
+        List<Filme> filmes = filmeService.findByName(nome);
+
+        return ResponseEntity.ok(filmes);
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<Filme> findById(@PathVariable long id) {
         return ResponseEntity.ok(filmeService.findByIdOrThrowException(id));
