@@ -1,5 +1,7 @@
 package academy.devdojo.springboot2.service;
 
+import academy.devdojo.springboot2.domain.AtualizaFilmeRequest;
+import academy.devdojo.springboot2.domain.CadastraFilmeRequest;
 import academy.devdojo.springboot2.domain.Filme;
 import academy.devdojo.springboot2.repository.FilmeRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,9 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -21,24 +21,31 @@ public class FilmeService {
        return repository.findAll();
     }
 
-    public Filme findById(long id) {
+    public Filme findByIdOrThrowException(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Filme not Found"));
     }
 
-    public Filme save(Filme filme) {
+    public Filme save(CadastraFilmeRequest filmeRequest) {
+        Filme filme = Filme.builder()
+                .nome(filmeRequest.getNome())
+                .build();
+
         repository.save(filme);
         return filme;
     }
 
     public void delete(long id) {
-        findById(id);
-        repository.deleteById(findById(id).getId());
+        repository.deleteById(findByIdOrThrowException(id).getId());
     }
 
-    public void replace(Long id, Filme filme) {
-        findById(id);
-        filme.setId(id);
+    public void replace(AtualizaFilmeRequest filmeRequest) {
+        findByIdOrThrowException(filmeRequest.getId());
+        Filme filme = Filme.builder()
+                .id(filmeRequest.getId())
+                .nome(filmeRequest.getNome())
+                .build();
+
         repository.save(filme);
     }
 }

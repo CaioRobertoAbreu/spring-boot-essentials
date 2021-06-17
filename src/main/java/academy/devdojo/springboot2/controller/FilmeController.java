@@ -1,5 +1,7 @@
 package academy.devdojo.springboot2.controller;
 
+import academy.devdojo.springboot2.domain.AtualizaFilmeRequest;
+import academy.devdojo.springboot2.domain.CadastraFilmeRequest;
 import academy.devdojo.springboot2.domain.Filme;
 import academy.devdojo.springboot2.service.FilmeService;
 import academy.devdojo.springboot2.util.DateUtil;
@@ -29,11 +31,11 @@ public class FilmeController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Filme> findById(@PathVariable long id) {
-        return ResponseEntity.ok(filmeService.findById(id));
+        return ResponseEntity.ok(filmeService.findByIdOrThrowException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Filme> save(@RequestBody Filme filme) {
+    public ResponseEntity<Filme> save(@RequestBody CadastraFilmeRequest filme) {
         return new ResponseEntity<>(filmeService.save(filme), HttpStatus.CREATED);
     }
 
@@ -43,9 +45,9 @@ public class FilmeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(path = "/{id}")
-    public ResponseEntity<Void> replace(@PathVariable Long id, @RequestBody Filme filme) {
-        filmeService.replace(id, filme);
+    @PutMapping()
+    public ResponseEntity<Void> replace(@RequestBody AtualizaFilmeRequest filme) {
+        filmeService.replace(filme);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
