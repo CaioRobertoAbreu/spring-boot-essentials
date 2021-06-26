@@ -6,10 +6,10 @@ import academy.devdojo.springboot2.domain.Filme;
 import academy.devdojo.springboot2.exception.NotFoundException;
 import academy.devdojo.springboot2.repository.FilmeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ public class FilmeService {
 
     private final FilmeRepository repository;
 
-    public List<Filme> listAll() {
-       return repository.findAll();
+    public Page<Filme> listAll(Pageable pageable) {
+       return repository.findAll(pageable);
     }
 
     public List<Filme> findByName(String nome){
