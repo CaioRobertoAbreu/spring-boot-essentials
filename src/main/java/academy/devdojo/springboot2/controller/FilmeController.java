@@ -34,6 +34,12 @@ public class FilmeController {
         return ResponseEntity.ok(filmeService.listAll(pageable));
     }
 
+    @GetMapping("/listAll")
+    public ResponseEntity<List<Filme>> list() {
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        return ResponseEntity.ok(filmeService.listAllNonPageable());
+    }
+
     @GetMapping("/find")
     public ResponseEntity<List<Filme>> findByName(@RequestParam(required = true) String nome){
         List<Filme> filmes = filmeService.findByName(nome);

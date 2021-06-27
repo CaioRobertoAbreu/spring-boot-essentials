@@ -23,6 +23,10 @@ public class FilmeService {
        return repository.findAll(pageable);
     }
 
+    public List<Filme> listAllNonPageable() {
+        return repository.findAll();
+    }
+
     public List<Filme> findByName(String nome){
         return repository.findByNomeContaining(nome);
     }
@@ -57,4 +61,5 @@ public class FilmeService {
 
         repository.save(filme);
     }
+
 }
